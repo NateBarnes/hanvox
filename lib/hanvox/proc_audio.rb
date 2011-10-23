@@ -1,11 +1,10 @@
-require "ruby-kissfft/kissfft"
-require "raw"
+require "kissfft/kissfft"
 require "signatures"
 require "tempfile"
 
 module Hanvox
   class ProcAudio
-    attr_accessor :channels, :data, :header, :file, :oname, :processors, :results, :sample_count, :save_dir
+    attr_accessor :channels, :data, :header, :file, :oname, :path, :processors, :results, :sample_count, :save_dir
     CHUNK_IDS = {:header       => "RIFF",
                    :format       => "fmt ",
                    :data         => "data",
@@ -21,10 +20,11 @@ module Hanvox
                    :instrument   => "inst" }
     PACK_CODES = {8 => "C*", 16 => "s*", 32 => "V*"}
   
-    def initialize path, save_dir
+    def initialize path, save_dir=nil
       @channels, @data, @results = [], [], []
       @header = {}
       @save_dir = save_dir || `pwd`.gsub("\n", "")
+      @path = path
     
       @file = File.open path
       @oname = File.basename path, ".wav"
@@ -34,7 +34,7 @@ module Hanvox
     def process opts={}
       (@header[:channels]).times do |c|
         c += 1
-        system "sox #{path} -s #{oname}_#{c}.wav remix #{c}"
+        system "sox #{@path} -s #{oname}_#{c}.wav remix #{c}"
         system "sox #{oname}_#{c}.wav -s #{oname}_#{c}.raw"
         system "rm -f #{oname}_#{c}.wav"
         @channels << "#{oname}_#{c}.raw"
@@ -58,7 +58,7 @@ module Hanvox
       #
       # Create the signature database
       #
-      raw  = Raw.from_file(input)
+      raw  = Hanvox::Raw.from_file(input)
       fft  = KissFFT.fftr(8192, 8000, 1, raw.samples)
 
       freq = raw.to_freq_sig_txt()
