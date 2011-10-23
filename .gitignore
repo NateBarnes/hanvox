@@ -39,7 +39,3 @@ Makefile
 mkmf.log
 
 # App Specific
-at5001_config.yml
-*.mp3
-call*.wav
-call*.png
