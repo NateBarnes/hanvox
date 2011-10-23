@@ -8,7 +8,7 @@ gemspec = eval(File.read("newgem.gemspec"))
 
 task :build => "#{gemspec.full_name}.gem"
 
-file "#{gemspec.full_name}.gem" => gemspec.files + ["newgem.gemspec"] do
-  system "gem build newgem.gemspec"
-  system "gem install newgem-#{NewGem::VERSION}.gem"
+file "#{gemspec.full_name}.gem" => gemspec.files + ["hanvox.gemspec"] do
+  system "gem build hanvox.gemspec"
+  system "gem install hanvox-#{Hanvox::VERSION}.gem"
 end
