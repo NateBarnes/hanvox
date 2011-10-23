@@ -1,7 +1,7 @@
 require File.expand_path("../lib/hanvox/version", __FILE__)
 
 Gem::Specification.new do |s|
-  s.name        = "Hanvox"
+  s.name        = "hanvox"
   s.version     = Hanvox::VERSION
   s.platform    = Gem::Platform::RUBY
   s.author     = "Nathaniel Barnes"
