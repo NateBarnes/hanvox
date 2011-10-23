@@ -1,0 +1,12 @@
+Hanvox is a library for processing audio files to search for certain signatures. It was originally part of AT-5001, but has been decoupled to allow for use in other projects.
+
+WARNING: Hanvox only functions on UNIX based systems.
+
+Installation:
+1. Install sox
+2. Install gnuplot
+3. gem install hanvox
+
+Example Usage:
+pa = Hanvox::ProcAudio.new "path_to_file"
+pa.process
